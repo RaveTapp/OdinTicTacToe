@@ -3,31 +3,39 @@ let Gameboard = (function(){
 
     function addToBoard(pos, marker) {
         board[pos - 1] = marker;
-        return board;
     }
 
     function getBoard() {
         return board;
     }
 
+    function resetBoard() {
+        board.length = 0;
+    }
+
     function print (){
-        for(let i = 0; i < 3; i++){
-            let line = "";
-            for(let j = 0; j < 3; j++){
-                if(board[3*i+j] === undefined){
-                    line += "  ";
-                } else {
-                    line += board[3*i+j] + " ";
+        if(board.length === 0){
+            console.log("The board is empty.")
+        } else {
+            for(let i = 0; i < 3; i++){
+                let line = "";
+                for(let j = 0; j < 3; j++){
+                    if(board[3*i+j] === undefined){
+                        line += "  ";
+                    } else {
+                        line += board[3*i+j] + " ";
+                    }
+                    
                 }
-                
+                console.log(line);
             }
-            console.log(line);
         }
     }
 
     return {
         addToBoard,
         getBoard,
+        resetBoard,
         print,
     }
 })();
@@ -35,9 +43,11 @@ let Gameboard = (function(){
 Gameboard.addToBoard(1, "x");
 Gameboard.addToBoard(2, "x");
 Gameboard.addToBoard(3, "o");
-//Gameboard.addToBoard(4, "x");
-Gameboard.addToBoard(5, "o");
+Gameboard.addToBoard(4, "o");
+Gameboard.addToBoard(5, "x");
+Gameboard.addToBoard(6, "x");
 Gameboard.addToBoard(7, "x");
+Gameboard.addToBoard(8, "o");
 Gameboard.addToBoard(9, "o");
 
 Gameboard.print();
@@ -52,6 +62,7 @@ let John = createPlayer("John");
 console.log(John);
 
 let game = (function () {
+    let board = Gameboard.getBoard();
     function checkWin(){
         let board = Gameboard.getBoard();
         let winningPositions = [
@@ -75,10 +86,19 @@ let game = (function () {
         }
         return false;
     }
+
+    function checkTie(){
+        if(board.length === 9 && !checkWin() && !board.includes(undefined)){
+            return true;
+        }
+        return false;
+    }
     
     return {
         checkWin,
+        checkTie,
     }
 })();
 
 console.log(game.checkWin());
+console.log(game.checkTie());
