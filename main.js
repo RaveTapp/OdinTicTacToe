@@ -66,23 +66,24 @@ let game = (function () {
     function start(){
         while(turn < 10){
             let next = prompt("Choose next position:");
-            if(turn % 2 != 0){ //Check if tile is empty
-                Gameboard.addToBoard(next, "x");
-            } else {
-                Gameboard.addToBoard(next, "o");
+            if(Gameboard.getBoard()[next-1] != "X" && Gameboard.getBoard()[next-1] != "O"){
+                if(turn % 2 != 0){
+                    Gameboard.addToBoard(next, "X");
+                } else {
+                    Gameboard.addToBoard(next, "O");
+                }
+                turn++;
+                Gameboard.print();
+                if(checkWin()){
+                    alert("Win");
+                    return;
+                }
+                if(checkTie()){
+                    alert("Tie");
+                    return;
+                }
             }
-            turn++;
-            Gameboard.print();
-            if(checkWin()){
-                alert("Win");
-                return;
-            }
-            if(checkTie()){
-                alert("Tie");
-                return;
-            }
-                
-            
+
         }
         
     }
@@ -125,6 +126,7 @@ let game = (function () {
         start,
     }
 })();
+
 
 console.log(game.checkWin());
 console.log(game.checkTie());
