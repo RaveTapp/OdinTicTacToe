@@ -40,18 +40,17 @@ let Gameboard = (function(){
     }
 })();
 
-Gameboard.addToBoard(1, "x");
-Gameboard.addToBoard(2, "x");
-Gameboard.addToBoard(3, "o");
-Gameboard.addToBoard(4, "o");
-Gameboard.addToBoard(5, "x");
-Gameboard.addToBoard(6, "x");
-Gameboard.addToBoard(7, "x");
-Gameboard.addToBoard(8, "o");
-Gameboard.addToBoard(9, "o");
+//Gameboard.addToBoard(1, "x");
+//Gameboard.addToBoard(2, "x");
+//Gameboard.addToBoard(3, "o");
+//Gameboard.addToBoard(4, "o");
+//Gameboard.addToBoard(5, "x");
+//Gameboard.addToBoard(6, "x");
+//Gameboard.addToBoard(7, "x");
+//Gameboard.addToBoard(8, "o");
+//Gameboard.addToBoard(9, "o");
 
 Gameboard.print();
-//console.log();
 
 function createPlayer (name) {
     return {name};
@@ -62,7 +61,32 @@ let John = createPlayer("John");
 console.log(John);
 
 let game = (function () {
-    let board = Gameboard.getBoard();
+    let turn = 1;
+
+    function start(){
+        while(turn < 10){
+            let next = prompt("Choose next position:");
+            if(turn % 2 != 0){ //Check if tile is empty
+                Gameboard.addToBoard(next, "x");
+            } else {
+                Gameboard.addToBoard(next, "o");
+            }
+            turn++;
+            Gameboard.print();
+            if(checkWin()){
+                alert("Win");
+                return;
+            }
+            if(checkTie()){
+                alert("Tie");
+                return;
+            }
+                
+            
+        }
+        
+    }
+
     function checkWin(){
         let board = Gameboard.getBoard();
         let winningPositions = [
@@ -88,6 +112,7 @@ let game = (function () {
     }
 
     function checkTie(){
+        let board = Gameboard.getBoard();
         if(board.length === 9 && !checkWin() && !board.includes(undefined)){
             return true;
         }
@@ -97,8 +122,11 @@ let game = (function () {
     return {
         checkWin,
         checkTie,
+        start,
     }
 })();
 
 console.log(game.checkWin());
 console.log(game.checkTie());
+
+game.start();
