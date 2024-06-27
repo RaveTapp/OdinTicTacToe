@@ -10,6 +10,30 @@ body {
     align-items: center;
 }
 
+.menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.menu > * {
+    margin: 8px 0;
+}
+
+button {
+    padding: 12px;
+    border-radius: 12px;
+    border: none;
+    box-shadow: 2px 2px 5px black;
+    background-color: white;
+}
+
+button:hover {
+    box-shadow: 4px 4px 10px black;
+    border: 1px solid white;
+}
+
 div.game {
     width: min(50vh, 50vw);
     height: min(50vh, 50vw);
@@ -25,4 +49,9 @@ div.game > * {
     justify-content: center;
     align-items: center;
     border: 1px solid grey;
+}
+
+.hidden {
+    visibility: hidden;
+    height: 0px;
 }

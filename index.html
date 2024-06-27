@@ -8,16 +8,34 @@
     <script src="main.js" defer></script>
 </head>
 <body>
-    <div class="game">
-        <p class="1" data-pos="1"></p>
-        <p class="2" data-pos="2"></p>
-        <p class="3" data-pos="3"></p>
-        <p class="4" data-pos="4"></p>
-        <p class="5" data-pos="5"></p>
-        <p class="6" data-pos="6"></p>
-        <p class="7" data-pos="7"></p>
-        <p class="8" data-pos="8"></p>
-        <p class="9" data-pos="9"></p>
+    <div>
+        <div class="menu">
+            <h1>Tic Tac Toe</h1>
+            <div class="input">
+                <div>
+                    <label for="btn1">First player name</label>
+                    <input type="text" id="btn1" required>
+                </div>
+                <div>
+                    <label for="btn2">Second player name</label>
+                    <input type="text" id="btn2" required>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="start">Start game</button>
+            </div>
+        </div>
+        <div class="game hidden">
+            <p data-pos="1"></p>
+            <p data-pos="2"></p>
+            <p data-pos="3"></p>
+            <p data-pos="4"></p>
+            <p data-pos="5"></p>
+            <p data-pos="6"></p>
+            <p data-pos="7"></p>
+            <p data-pos="8"></p>
+            <p data-pos="9"></p>
+        </div>
     </div>
 </body>
 </html>

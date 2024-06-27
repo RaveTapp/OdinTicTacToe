@@ -118,9 +118,8 @@ let game = (function () {
 })();
 
 let displayManager = (function (){
-    let div = document.querySelector(".game");
-
-    div.addEventListener("click", (event) => {
+    let gameDiv = document.querySelector(".game");
+    gameDiv.addEventListener("click", (event) => {
         if(!game.isEndOfGame){
             let target = event.target;
             let pos = target.getAttribute("data-pos");
@@ -129,5 +128,20 @@ let displayManager = (function (){
                 target.textContent = marker;
             }
         }
+    });
+
+    let start = document.querySelector("#start");
+    let input = document.querySelector(".input");
+    start.addEventListener("click", () => {
+        let btn1 = document.querySelector("#btn1");
+        let btn2 = document.querySelector("#btn2");
+        if (gameDiv.classList.contains("hidden")){
+            gameDiv.classList.remove("hidden");
+            input.classList.add("hidden");
+        } else {
+
+        }
+        
+        
     });
 })();
