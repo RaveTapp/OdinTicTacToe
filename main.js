@@ -60,7 +60,7 @@ let players = (function () {
 
 let game = (function () {
     let turn = 1;
-    let isEndOfGame = false;
+    let isEnd = false;
     let marker = "X";
     let player = players.get()[0];
     let nextPlayer;
@@ -82,11 +82,11 @@ let game = (function () {
             turn++;
 
             if(checkWin()){
-                game.isEndOfGame = true;
+                game.isEnd = true;
                 alert(player + " won the game!"); 
             }
-            if(checkTie()){
-                game.isEndOfGame = true;
+            else if(checkTie()){
+                game.isEnd = true;
                 alert("There was a tie.");
             }
 
@@ -104,6 +104,7 @@ let game = (function () {
             [4,5,6], [7,8,9]
         ];
 
+        //Transform to arrays of markers
         let current = winningPositions.map((curr) => {
             let temp = [];
             for(let i = 0; i < 3; i++){
@@ -112,6 +113,7 @@ let game = (function () {
             return temp;
         });
 
+        //Check if all markers in array are the same
         for(let i = 0; i < current.length; i++){
             if(current[i].every((value) => value === current[i][0] && value != undefined)){
                 return true;
@@ -122,14 +124,14 @@ let game = (function () {
 
     function checkTie(){
         let board = gameboard.getBoard();
-        if(board.length === 9 && !checkWin() && !board.includes(undefined)){
+        if(board.length === 9 && !board.includes(undefined)){
             return true;
         }
         return false;
     }
 
     function reset(){
-        game.isEndOfGame = false;
+        game.isEnd = false;
         gameboard.reset();
     }
     
@@ -137,7 +139,7 @@ let game = (function () {
         checkWin,
         checkTie,
         takeTurn,
-        isEndOfGame,
+        isEnd,
         reset,
     }
 })();
@@ -145,11 +147,11 @@ let game = (function () {
 let displayManager = (function (){
     let gameDiv = document.querySelector(".game");
     gameDiv.addEventListener("click", (event) => {
-        if(!game.isEndOfGame){
+        if(!game.isEnd){
             let target = event.target;
             if(target.hasAttribute("data-pos")){
-                let pos = target.getAttribute("data-pos");
-                let marker = game.takeTurn(pos);
+                let position = target.getAttribute("data-pos");
+                let marker = game.takeTurn(position);
                 if(marker){
                     target.textContent = marker;
                 }
@@ -157,6 +159,7 @@ let displayManager = (function (){
         }
     });
 
+    //Start game button
     let start = document.querySelector("#start");
     let input = document.querySelector(".input");
     start.addEventListener("click", () => {
@@ -167,7 +170,6 @@ let displayManager = (function (){
             
             players.create(btn1.value, btn2.value);
             input.innerHTML = "<p>Next up: <b class='player'>" + players.get()[0] + "</b></p>";
-
         } else {
             game.reset();
             let tiles = document.querySelectorAll(".game p");
