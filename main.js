@@ -122,6 +122,7 @@ let displayManager = (function (){
     gameDiv.addEventListener("click", (event) => {
         if(!game.isEndOfGame){
             let target = event.target;
+            //console.log(target);
             let pos = target.getAttribute("data-pos");
             let marker = game.takeTurn(pos);
             if(marker){
@@ -139,7 +140,12 @@ let displayManager = (function (){
             gameDiv.classList.remove("hidden");
             input.classList.add("hidden");
         } else {
-
+            Gameboard.resetBoard();
+            let tiles = document.querySelectorAll(".game p");
+            for(let i = 0; i < tiles.length; i++){
+                tiles[i].textContent = "";
+            }
+            game.isEndOfGame = false;
         }
         
         
