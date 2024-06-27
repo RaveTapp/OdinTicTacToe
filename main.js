@@ -122,11 +122,12 @@ let displayManager = (function (){
     gameDiv.addEventListener("click", (event) => {
         if(!game.isEndOfGame){
             let target = event.target;
-            //console.log(target);
-            let pos = target.getAttribute("data-pos");
-            let marker = game.takeTurn(pos);
-            if(marker){
-                target.textContent = marker;
+            if(target.hasAttribute("data-pos")){
+                let pos = target.getAttribute("data-pos");
+                let marker = game.takeTurn(pos);
+                if(marker){
+                    target.textContent = marker;
+                }
             }
         }
     });
