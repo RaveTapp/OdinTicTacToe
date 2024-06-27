@@ -63,29 +63,26 @@ console.log(John);
 let game = (function () {
     let turn = 1;
 
-    function start(){
-        while(turn < 10){
-            let next = prompt("Choose next position:");
-            if(Gameboard.getBoard()[next-1] != "X" && Gameboard.getBoard()[next-1] != "O"){
-                if(turn % 2 != 0){
-                    Gameboard.addToBoard(next, "X");
-                } else {
-                    Gameboard.addToBoard(next, "O");
-                }
-                turn++;
-                Gameboard.print();
-                if(checkWin()){
-                    alert("Win");
-                    return;
-                }
-                if(checkTie()){
-                    alert("Tie");
-                    return;
-                }
+    function takeTurn(next){
+        if(Gameboard.getBoard()[next-1] != "X" && Gameboard.getBoard()[next-1] != "O"){
+            let marker;
+            if(turn % 2 != 0){
+                marker = "X";
+            } else {
+                marker = "O";
             }
-
+            Gameboard.addToBoard(next, marker);
+            turn++;
+            Gameboard.print();
+            if(checkWin()){
+                alert("Win");
+                return marker;
+            }
+            if(checkTie()){
+                alert("Tie");
+                return;
+            }
         }
-        
     }
 
     function checkWin(){
@@ -123,12 +120,18 @@ let game = (function () {
     return {
         checkWin,
         checkTie,
-        start,
+        takeTurn,
     }
 })();
 
 let displayManager = (function (){
     let div = document.querySelector(".game");
+
+    div.addEventListener("click", (event) => {
+        let target = event.target;
+        let pos = target.getAttribute("data-pos");
+        console.log(game.takeTurn(pos));
+    });
     let X = document.createElement("p");
     X.textContent = "X";
     //div.appendChild(X);
