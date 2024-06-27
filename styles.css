@@ -1,0 +1,28 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+div.game {
+    width: min(50vh, 50vw);
+    height: min(50vh, 50vw);
+    border: 18px solid orange;
+    border-radius: 18px;
+    
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+div.game > * {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid grey;
+}

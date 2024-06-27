@@ -127,8 +127,14 @@ let game = (function () {
     }
 })();
 
+let displayManager = (function (){
+    let div = document.querySelector(".game");
+    let X = document.createElement("p");
+    X.textContent = "X";
+    //div.appendChild(X);
+})();
 
 console.log(game.checkWin());
 console.log(game.checkTie());
 
-game.start();
+//game.start();
