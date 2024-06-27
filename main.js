@@ -9,7 +9,7 @@ let gameboard = (function(){
         return board;
     }
 
-    function resetBoard() {
+    function reset() {
         board.length = 0;
     }
 
@@ -35,12 +35,10 @@ let gameboard = (function(){
     return {
         addToBoard,
         getBoard,
-        resetBoard,
+        reset,
         print,
     }
 })();
-
-gameboard.print();
 
 let players = (function () {
     let array = [];
@@ -63,26 +61,37 @@ let players = (function () {
 let game = (function () {
     let turn = 1;
     let isEndOfGame = false;
+    let marker = "X";
+    let player = players.get()[0];
+    let nextPlayer;
 
     function takeTurn(next){
         if(gameboard.getBoard()[next-1] != "X" && gameboard.getBoard()[next-1] != "O"){
-            let marker;
+            gameboard.addToBoard(next, marker);
+            
+            
             if(turn % 2 != 0){
                 marker = "X";
+                player = players.get()[0];
+                nextPlayer = players.get()[1];
             } else {
                 marker = "O";
+                player = players.get()[1];
+                nextPlayer = players.get()[0];
             }
-            gameboard.addToBoard(next, marker);
             turn++;
 
             if(checkWin()){
                 game.isEndOfGame = true;
-                alert("Win"); 
+                alert(player + " won the game!"); 
             }
             if(checkTie()){
                 game.isEndOfGame = true;
-                alert("Tie");
+                alert("There was a tie.");
             }
+
+            document.querySelector("b.player").textContent = nextPlayer;
+
             return marker;
         }
     }
@@ -118,12 +127,18 @@ let game = (function () {
         }
         return false;
     }
+
+    function reset(){
+        game.isEndOfGame = false;
+        gameboard.reset();
+    }
     
     return {
         checkWin,
         checkTie,
         takeTurn,
         isEndOfGame,
+        reset,
     }
 })();
 
@@ -149,19 +164,16 @@ let displayManager = (function (){
         let btn2 = document.querySelector("#btn2");
         if (gameDiv.classList.contains("hidden")){
             gameDiv.classList.remove("hidden");
-            input.classList.add("hidden");
-
+            
             players.create(btn1.value, btn2.value);
+            input.innerHTML = "<p>Next up: <b class='player'>" + players.get()[0] + "</b></p>";
 
         } else {
-            gameboard.resetBoard();
+            game.reset();
             let tiles = document.querySelectorAll(".game p");
             for(let i = 0; i < tiles.length; i++){
                 tiles[i].textContent = "";
             }
-            game.isEndOfGame = false;
         }
-        
-        
     });
 })();
