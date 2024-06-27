@@ -52,6 +52,7 @@ console.log(John);
 
 let game = (function () {
     let turn = 1;
+    let isEndOfGame = false;
 
     function takeTurn(next){
         if(Gameboard.getBoard()[next-1] != "X" && Gameboard.getBoard()[next-1] != "O"){
@@ -65,9 +66,11 @@ let game = (function () {
             turn++;
 
             if(checkWin()){
+                game.isEndOfGame = true;
                 alert("Win"); 
             }
             if(checkTie()){
+                game.isEndOfGame = true;
                 alert("Tie");
             }
             return marker;
@@ -110,6 +113,7 @@ let game = (function () {
         checkWin,
         checkTie,
         takeTurn,
+        isEndOfGame,
     }
 })();
 
@@ -117,13 +121,13 @@ let displayManager = (function (){
     let div = document.querySelector(".game");
 
     div.addEventListener("click", (event) => {
-        let target = event.target;
-        let pos = target.getAttribute("data-pos");
-        let marker = game.takeTurn(pos);
-        if(marker){
-            target.textContent = marker;
+        if(!game.isEndOfGame){
+            let target = event.target;
+            let pos = target.getAttribute("data-pos");
+            let marker = game.takeTurn(pos);
+            if(marker){
+                target.textContent = marker;
+            }
         }
-        
     });
 })();
-//Disable clicks when game is won or tied
