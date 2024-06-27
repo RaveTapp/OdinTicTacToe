@@ -51,6 +51,10 @@ div.game > * {
     border: 1px solid grey;
 }
 
+input {
+    margin: 4px 0;
+}
+
 .hidden {
     visibility: hidden;
     height: 0px;

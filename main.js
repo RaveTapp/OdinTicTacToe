@@ -1,4 +1,4 @@
-let Gameboard = (function(){
+let gameboard = (function(){
     let board = [];
 
     function addToBoard(pos, marker) {
@@ -40,29 +40,39 @@ let Gameboard = (function(){
     }
 })();
 
-Gameboard.print();
+gameboard.print();
 
-function createPlayer (name) {
-    return {name};
-}
+let players = (function () {
+    let array = [];
+    function create (name1, name2) {
+        array.length = 0;
+        array.push(name1);
+        array.push(name2);
+    }
 
-let John = createPlayer("John");
+    function get(){
+        return array;
+    }
 
-console.log(John);
+    return {
+        create,
+        get,
+    }
+})();
 
 let game = (function () {
     let turn = 1;
     let isEndOfGame = false;
 
     function takeTurn(next){
-        if(Gameboard.getBoard()[next-1] != "X" && Gameboard.getBoard()[next-1] != "O"){
+        if(gameboard.getBoard()[next-1] != "X" && gameboard.getBoard()[next-1] != "O"){
             let marker;
             if(turn % 2 != 0){
                 marker = "X";
             } else {
                 marker = "O";
             }
-            Gameboard.addToBoard(next, marker);
+            gameboard.addToBoard(next, marker);
             turn++;
 
             if(checkWin()){
@@ -78,7 +88,7 @@ let game = (function () {
     }
 
     function checkWin(){
-        let board = Gameboard.getBoard();
+        let board = gameboard.getBoard();
         let winningPositions = [
             [1,2,3], [1,4,7], [1,5,9],
             [2,5,8], [3, 5, 7], [3,6,9],
@@ -102,7 +112,7 @@ let game = (function () {
     }
 
     function checkTie(){
-        let board = Gameboard.getBoard();
+        let board = gameboard.getBoard();
         if(board.length === 9 && !checkWin() && !board.includes(undefined)){
             return true;
         }
@@ -140,8 +150,11 @@ let displayManager = (function (){
         if (gameDiv.classList.contains("hidden")){
             gameDiv.classList.remove("hidden");
             input.classList.add("hidden");
+
+            players.create(btn1.value, btn2.value);
+
         } else {
-            Gameboard.resetBoard();
+            gameboard.resetBoard();
             let tiles = document.querySelectorAll(".game p");
             for(let i = 0; i < tiles.length; i++){
                 tiles[i].textContent = "";
