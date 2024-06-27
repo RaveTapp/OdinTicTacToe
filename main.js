@@ -40,16 +40,6 @@ let Gameboard = (function(){
     }
 })();
 
-//Gameboard.addToBoard(1, "x");
-//Gameboard.addToBoard(2, "x");
-//Gameboard.addToBoard(3, "o");
-//Gameboard.addToBoard(4, "o");
-//Gameboard.addToBoard(5, "x");
-//Gameboard.addToBoard(6, "x");
-//Gameboard.addToBoard(7, "x");
-//Gameboard.addToBoard(8, "o");
-//Gameboard.addToBoard(9, "o");
-
 Gameboard.print();
 
 function createPlayer (name) {
@@ -73,15 +63,14 @@ let game = (function () {
             }
             Gameboard.addToBoard(next, marker);
             turn++;
-            Gameboard.print();
+
             if(checkWin()){
-                alert("Win");
-                return marker;
+                alert("Win"); 
             }
             if(checkTie()){
                 alert("Tie");
-                return;
             }
+            return marker;
         }
     }
 
@@ -130,14 +119,11 @@ let displayManager = (function (){
     div.addEventListener("click", (event) => {
         let target = event.target;
         let pos = target.getAttribute("data-pos");
-        console.log(game.takeTurn(pos));
+        let marker = game.takeTurn(pos);
+        if(marker){
+            target.textContent = marker;
+        }
+        
     });
-    let X = document.createElement("p");
-    X.textContent = "X";
-    //div.appendChild(X);
 })();
-
-console.log(game.checkWin());
-console.log(game.checkTie());
-
-//game.start();
+//Disable clicks when game is won or tied
